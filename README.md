@@ -19,3 +19,6 @@ And in a client part to correct one symbol in the 19th line:
 "/ c " on "- c ".
 
 
+Also in a server part the encoding/charmap package is used, before compilation it is necessary to establish:
+
+go get "golang.org/x/text/encoding/charmap"
