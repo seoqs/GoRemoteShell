@@ -26,4 +26,5 @@ func main() {
 			fmt.Print(str)
 		}
 	}
+	conn.Close()
 }
