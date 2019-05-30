@@ -6,19 +6,6 @@ go build -ldflags "-s -H windowsgui" winServerShell.go
 
 This version of the program can be carried out both on the operational Windows systems, and on * by Unix similar systems.
 
-In case of use of a server part on * Unix similar systems needs to replace an interpreter name in the 37th line:
-
-"with cmd: = exec.Command ("cmd", argsCommand...)" 
-
-"cmd" on "bash | sh".
-
-And in a client part to correct one symbol in the 19th line:
-
-"fmt.Fprintf (conn, " / c " text " \n")"
-
-"/ c " on "- c ".
-
-
 Also in a server part the encoding/charmap package is used, before compilation it is necessary to establish:
 
 go get "golang.org/x/text/encoding/charmap"
