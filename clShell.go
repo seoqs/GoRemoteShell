@@ -16,7 +16,7 @@ func main() {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Command to send: ")
 		text, _ := reader.ReadString('\n')
-		fmt.Fprintf(conn, "/c "+text+"\n")
+		fmt.Fprintf(conn, text+"\n")
 		connbuf := bufio.NewReader(conn)
 		for {
 			str, _ := connbuf.ReadString('\n')
