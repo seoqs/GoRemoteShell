@@ -4,8 +4,6 @@ In order that a server part of the program did not display a console window when
 
 go build -ldflags "-s -H windowsgui" winServerShell.go
 
-This version of the program can be carried out both on the operational Windows systems, and on * by Unix similar systems.
-
 Also in a server part the encoding/charmap package is used, before compilation it is necessary to establish:
 
 go get "golang.org/x/text/encoding/charmap"
