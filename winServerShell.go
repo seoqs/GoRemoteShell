@@ -5,22 +5,18 @@ import (
 	"bufio"
 	"net"
 	"os/exec"
+	"runtime"
 	"strings"
 	"syscall"
 
 	"golang.org/x/text/encoding/charmap"
 )
-/*Set the parameter for use, "win" - for use of a server part on the operational systems of the Windows family, 
-or "lin" - for use of a server part to linux similar systems.
-*/
-var osName = "win" // "win" or "lin"
 
-var shell string
-var arSh string
+var shell, arSh string
 
 func main() {
-
-	if osName != "lin" {
+	
+	if runtime.GOOS == "windows" {
 		shell = "cmd"
 		arSh = "/c"
 	} else {
@@ -56,3 +52,4 @@ func winShellExe(shell string, strCommand string) (out string) {
 	out = string(decodeOut)
 	return
 }
+
