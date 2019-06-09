@@ -8,9 +8,12 @@ import (
 	"strings"
 )
 
-var servIPAddress = "127.0.0.1"
-
 func main() {
+
+	readIP := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter Server IP address: ")
+	strIPAddress, _ := readIP.ReadString('\n')
+	servIPAddress := strings.TrimRight(strIPAddress, "\r\n")
 	conn, _ := net.Dial("tcp", servIPAddress+":8081")
 	for {
 		reader := bufio.NewReader(os.Stdin)
