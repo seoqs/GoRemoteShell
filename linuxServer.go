@@ -1,4 +1,4 @@
-//go build -ldflags "-s -H windowsgui" server.go
+
 package main
 
 import (
